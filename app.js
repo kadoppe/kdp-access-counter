@@ -1,8 +1,10 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+var session = require('express-session');
 
-var redis = require('redis').createClient();
+var RedisStore = require('connect-redis')(session);
+var redisClient = require('redis').createClient();
 
 var app = express();
 
@@ -10,12 +12,20 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// session setup
+app.use(session( {
+  store: new RedisStore({ client: redisClient }),
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
+
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
 
-  redis.get('count', function (err, reply) {
+  redisClient.get('count', function (err, reply) {
     if (err) {
       throw err;
     }
@@ -25,7 +35,10 @@ app.get('/', function(req, res) {
       count = 0;
     }
 
-    redis.set('count', ++count);
+    if (!req.session.repeater) {
+      redisClient.set('count', ++count);
+      req.session.repeater = true;
+    }
 
     res.render('index', { count: count });
   });
