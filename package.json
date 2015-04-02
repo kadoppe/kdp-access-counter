@@ -21,8 +21,11 @@
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
+    "chai": "^2.2.0",
     "gulp": "^3.8.11",
     "gulp-livereload": "^3.8.0",
-    "gulp-nodemon": "^2.0.2"
+    "gulp-nodemon": "^2.0.2",
+    "mocha": "^2.2.1",
+    "supertest": "^0.15.0"
   }
 }
