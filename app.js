@@ -12,7 +12,7 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
-  res.send('Hello World');
+  res.render('index');
 });
 
 // catch 404 and forward to error handler
