@@ -2,6 +2,8 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 
+var redis = require('redis').createClient();
+
 var app = express();
 
 // view engine setup
@@ -12,7 +14,21 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
-  res.render('index');
+
+  redis.get('count', function (err, reply) {
+    if (err) {
+      throw err;
+    }
+
+    var count = reply;
+    if (count === null) {
+      count = 0;
+    }
+
+    redis.set('count', ++count);
+
+    res.render('index', { count: count });
+  });
 });
 
 // catch 404 and forward to error handler
