@@ -6,11 +6,18 @@ var session = require('express-session');
 var config = require('config');
 
 var RedisStore = require('connect-redis')(session);
-var redisClient = require('redis').createClient(
-  process.env.REDIS_PORT || config.redis.port,
-  process.env_REDIS_HOST || config.redis.host
-);
 
+var url = require('url');
+var redisURL = url.parse(process.env.REDISCLOUD_URL || config.redis.url);
+
+var redisClient = require('redis').createClient(
+  redisURL.port,
+  redisURL.hostname,
+  { no_ready_check: true }
+);
+if (redisURL.auth) {
+  redisClient.auth(redisURL.auth.split(':')[1]);
+}
 
 var app = express();
 
