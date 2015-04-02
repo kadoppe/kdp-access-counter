@@ -3,8 +3,11 @@ var path = require('path');
 var logger = require('morgan');
 var session = require('express-session');
 
+var config = require('config');
+
 var RedisStore = require('connect-redis')(session);
 var redisClient = require('redis').createClient();
+
 
 var app = express();
 
@@ -15,7 +18,7 @@ app.set('view engine', 'jade');
 // session setup
 app.use(session( {
   store: new RedisStore({ client: redisClient }),
-  secret: 'keyboard cat',
+  secret: process.env.SESSION_SECRET || config.session.secret,
   resave: false,
   saveUninitialized: true
 }));
