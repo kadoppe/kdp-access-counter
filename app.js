@@ -6,7 +6,10 @@ var session = require('express-session');
 var config = require('config');
 
 var RedisStore = require('connect-redis')(session);
-var redisClient = require('redis').createClient();
+var redisClient = require('redis').createClient(
+  process.env.REDIS_PORT || config.redis.port,
+  process.env_REDIS_HOST || config.redis.host
+);
 
 
 var app = express();
