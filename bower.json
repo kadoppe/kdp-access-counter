@@ -1,0 +1,19 @@
+{
+  "name": "counter",
+  "version": "0.0.0",
+  "authors": [
+    "kadoppe <kadoppe@me.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4"
+  }
+}
