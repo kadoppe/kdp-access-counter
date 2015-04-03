@@ -1,6 +1,6 @@
 {
-  "name": "counter",
-  "version": "0.0.0",
+  "name": "kdp-access-counter",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
