@@ -1,6 +1,9 @@
 {
   "name": "kdp-access-counnter",
   "description": "An access counter",
-  "repository": "https://github.com/kadoppe/kdp-access-counter"
+  "repository": "https://github.com/kadoppe/kdp-access-counter",
+  "addons": [
+    "rediscloud"
+  ]
 }
 
